@@ -32,3 +32,8 @@ nohup python3 main.py &
 tail -f honeypot.log
 ```
 
+### Multiple changes are needed
+- In main.py    
+  - You need to change the variable ```IP_ADDRESS = '127.0.0.1'``` to the right interface.
+  - You can change the port on this line ```PORT = 987``` 
+- To add more files to make it more realistic, place them in the ```contrats``` directory.

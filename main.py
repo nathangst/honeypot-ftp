@@ -7,9 +7,6 @@ from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 
 
-IP_ADDRESS = '127.0.0.1'
-
-
 def write_log(log_message):
     with open("honeypot.log", "a") as log_file:
         log_file.write(log_message + "\n")
@@ -21,11 +18,13 @@ class MyFTPHandler(FTPHandler):
         log_message = f"[{timestamp}] - Connection established from {self.remote_ip}"
         write_log(log_message)
 
+
     def on_file_received(self, file):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_message = f"[{timestamp}] - File received: {file}"
         print(log_message)
         write_log(log_message)
+
 
     def on_file_sent(self, file):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -44,11 +43,14 @@ def ftp_server():
 
     logging.basicConfig(level=logging.INFO)
     handler.banner = "Welcome to the Honeypot FTP Server"
-    address = (IP_ADDRESS, 987)
+    address = (IP_ADDRESS, PORT)
     server = FTPServer(address, handler)
     server.serve_forever()
 
 
 if __name__ == "__main__":
+    IP_ADDRESS = '127.0.0.1'
+    PORT = 987
+
     # Lancement du serveur FTP
     ftp_server()
